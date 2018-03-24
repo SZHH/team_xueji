@@ -1,10 +1,11 @@
-
-    authority:�û��������ʱ����ҳ(Ȩ�޲��㵫��ͨ������ǿ�з���)��
-    selectcompare:ѡ����Ҫ�Աȵĵ�����¼��
-    compare:���жԱȣ�
-    courses_list:���ɼ�ҳʱ��ʾ��ѡ�༶�Ŀγ̣�
-    rollcall_add:���е���(���������Ӽ�¼��������ô����)��
-    rollcalltime:ѡ����Ҫ��ѯ�ĵ�����¼(��ʱ�����ҳ��������ô����)��
-    rollcall:��ʾ������¼(��)��
-    validate:��½ʱ�����жϵ�ҳ(����֮ǰ��dispose������Ϊ����֤��)��
-    register:��Ϊע�ᡣ
+﻿改动概要:
+	布局页的权限设置；
+	班级页和课程页的权限设置
+	学生页把之前用于测试的classeaaaaaaa_id改回来了；
+	加了一个authority页，用于防止用户恶意访问(每个只有领导能访问的页都在开头加了四行代码)；
+	修复了讲师查看成绩时的bug；
+	课程ID不再显示；
+	导员进班级时，首先查看自己带的班级；讲师进课程时，首先查看自己教的课程。
+发现的问题:
+	新版学籍系统(即本学籍系统)少个查看成绩页(老版学籍的details)；
+	应把点名时间改为二十四时制。

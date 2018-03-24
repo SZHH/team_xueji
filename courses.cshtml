@@ -1,3 +1,76 @@
 ﻿@{
-    
+    Layout = "~/_xuejiLayout.cshtml";
+    var db = Database.Open("StarterSite");
+    var list = "select * from courses";
 }
+@if (Convert.ToInt16(Session["authority"]) == 2)
+{
+    <a class="btn btn-info" href="~/courses_add.cshtml">新增课程</a>
+}
+@if (Convert.ToInt16(Session["authority"]) == 1)
+{
+    var idCommand = "select id from teachers where teachers_name = '" + Session["name"] + "'";
+    var id = db.QuerySingle(idCommand).id;
+    var list1 = "select * from courses where teachers_id = " + id;
+    <h3>您所上课程：</h3>
+    <table class="table table-striped table-bordered table-hover bootstrap-datatable datatable">
+        <thead>
+            <tr class="t">
+                <th>课程名称</th>
+                <th>指导教师</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in db.Query(list1))
+            {
+                <tr class="t">
+                        <td class="center">@row.courses_name</td>
+                    @{
+                        var tid = row.teachers_id;
+                        var listt = "select *from teachers where id=" + tid;
+                        var row1 = db.QuerySingle(listt);
+                    }
+                    <td class="center">@row1.teachers_name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<h3>所有课程：</h3>
+<table id="table_id" class="display">
+    <thead>
+        <tr class="t">
+            <th>课程名称</th>
+            <th>指导教师</th>
+            @if (Convert.ToInt16(Session["authority"]) == 2)
+            {
+                <th>操作</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in db.Query(list))
+        {
+            <tr class="t">
+                @if (Convert.ToInt16(Session["authority"]) == 2)
+                {
+                    <td class="center"><a href="~/courses_edit.cshtml">@row.courses_name</a></td>
+                }
+                else
+                {
+                    <td class="center">@row.courses_name</td>
+                }
+                @{
+                    var tid = row.teachers_id;
+                    var listt = "select * from teachers where id = " + tid;
+                    var row1 = db.QuerySingle(listt);
+                }
+                <td class="center">@row1.teachers_name</td>
+                @if (Convert.ToInt16(Session["authority"]) == 2)
+                {
+                    <td><a class="btn btn-danger" href="~/courses_del.cshtml?id=@row.id">删除</a></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
